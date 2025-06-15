@@ -32,7 +32,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     environment:
-      name: ghpages
+      name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     concurrency:
       group: pages
