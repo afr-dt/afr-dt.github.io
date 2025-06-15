@@ -1,9 +1,8 @@
-name: Build & Deploy to GitHub Pages
+name: Deploy Go Static Page to GitHub Pages
 
 on:
   push:
-    branches: [main] # Despliega cada vez que haces push a main
-  workflow_dispatch: # Permite dispararlo manualmente
+    branches: [main] # Ajusta si usas otra rama
 
 permissions:
   contents: read
@@ -13,20 +12,23 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-go@v5
+      - name: Set up Go
+        uses: actions/setup-go@v5
         with:
-          go-version: "1.22"
+          go-version: "1.22" # Ajusta si usas otra versión
 
-      - run: go test ./... # 1️⃣ Corre los tests
-      - run: go run . --write # 2️⃣ Genera dist/index.html
+      - name: Build HTML with Go
+        run: go run . --write
 
-      - name: Upload artifact
+      - name: Upload artifact (dist/)
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist # 3️⃣ Sube carpeta dist/ como artefacto de Pages
+          path: dist # Este es el contenido que se va a publicar
 
   deploy:
     needs: build
@@ -34,9 +36,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    concurrency:
-      group: pages
-      cancel-in-progress: false
+
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
