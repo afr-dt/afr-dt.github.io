@@ -16,7 +16,7 @@ func Render() string {
 	<h1>Hi 👋, I'm Alejandro</h1>
 	<p>A passionate Backend Developer from Mexico 🇲🇽</p>
 	<p>🔭 I’m currently working on Google Cloud Technologies ...</p>
-	<p>🌱 🌱 I’m currently learning GitOps and DevSecOps... ...</p>
+	<p>🌱 I’m currently learning GitOps and DevSecOps... ...</p>
 </body>
 </html>`
 }
