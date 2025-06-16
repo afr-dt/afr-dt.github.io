@@ -13,8 +13,10 @@ func Render() string {
 	<title>Go pages</title>
 </head>
 <body>
-	<h1>¡Alejandro Flores!</h1>
-	<p>GitHub Actions</p>
+	<h1>Hi 👋, I'm Alejandro</h1>
+	<p>A passionate Backend Developer from Mexico 🇲🇽</p>
+	<p>🔭 I’m currently working on Google Cloud Technologies ...</p>
+	<p>🌱 🌱 I’m currently learning GitOps and DevSecOps... ...</p>
 </body>
 </html>`
 }
