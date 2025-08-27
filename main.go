@@ -12,8 +12,31 @@ func Render() string {
 	<head>
 		<meta charset="utf-8">
 		<title>Go Pages</title>
+		<style>
+			body {
+				font-family: sans-serif;
+				line-height: 1.6;
+				margin: 20px;
+				transition: background-color 0.3s, color 0.3s;
+			}
+			body.dark-mode {
+				background-color: #121212;
+				color: #ffffff;
+			}
+			.theme-switcher {
+				position: fixed;
+				top: 20px;
+				right: 20px;
+				cursor: pointer;
+				border: 1px solid #ccc;
+				padding: 10px;
+				border-radius: 5px;
+			}
+		</style>
 	</head>
 	<body>
+		<div class="theme-switcher" onclick="toggleTheme()">🌙</div>
+
 		<h1>Hi 👋, I'm Alejandro</h1>
 		
 		<section>
@@ -55,6 +78,18 @@ func Render() string {
 
 			<p>🎯 Certified Google Cloud Associate Cloud Engineer.</p>
 		</section>
+
+		<script>
+			function toggleTheme() {
+				document.body.classList.toggle('dark-mode');
+				const themeSwitcher = document.querySelector('.theme-switcher');
+				if (document.body.classList.contains('dark-mode')) {
+					themeSwitcher.textContent = '☀️';
+				} else {
+					themeSwitcher.textContent = '🌙';
+				}
+			}
+		</script>
 	</body>
 	</html>
 	`

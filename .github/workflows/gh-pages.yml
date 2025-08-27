@@ -2,7 +2,7 @@ name: Deploy Go Static Page to GitHub Pages
 
 on:
   push:
-    branches: [main] # Ajusta si usas otra rama
+    branches: [main]
 
 permissions:
   contents: read
@@ -20,7 +20,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: "1.22" # Ajusta si usas otra versión
+          go-version: "1.22"
 
       - name: Build HTML with Go
         run: go run . --write
@@ -28,7 +28,7 @@ jobs:
       - name: Upload artifact (dist/)
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist # Este es el contenido que se va a publicar
+          path: dist
 
   deploy:
     needs: build
