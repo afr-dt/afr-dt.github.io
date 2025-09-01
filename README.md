@@ -9,7 +9,7 @@ Este repositorio contiene un sitio estático construido con **Hugo** (tema Night
 ## 🛠️ Requisitos
 - Hugo Extended ≥ 0.146.0
 - Dart Sass disponible en PATH (p. ej. `npm i -g sass@1.62.1`)
-- Submódulos de Git inicializados (`themes/nightfall/`)
+- Hugo Modules habilitado (el tema se resuelve como módulo)
 
 ## 📂 Estructura
 ```
@@ -19,13 +19,13 @@ Este repositorio contiene un sitio estático construido con **Hugo** (tema Night
 ├── layouts/             # Plantillas personalizadas
 ├── assets/              # SCSS/recursos procesados
 ├── static/              # Archivos servidos tal cual
-├── themes/nightfall/    # Tema (submódulo)
+├── (tema vía Hugo Modules, no se necesita `themes/` en el repo)
 └── .github/workflows/gh-pages.yml  # Workflow de despliegue
 ```
 
 ## ▶️ Desarrollo local
 ```
-git submodule update --init --recursive
+hugo mod get
 hugo server -D
 ```
 Visita http://localhost:1313 para previsualizar. Usa `-D` para incluir borradores.
@@ -34,7 +34,7 @@ Visita http://localhost:1313 para previsualizar. Usa `-D` para incluir borradore
 ```
 hugo --gc --minify
 ```
-La salida se genera en `public//` (no se debe commitear). 
+La salida se genera en `public/` (no se debe commitear).
 
 ## 🚚 Deploy
 El deploy se ejecuta vía workflow en `.github/workflows/gh-pages.yml` al hacer push a `main`. Asegura en Settings → Pages que la fuente sea “GitHub Actions”.

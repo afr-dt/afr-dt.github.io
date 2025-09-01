@@ -16,8 +16,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          submodules: true
 
       - name: Install Dart Sass (CLI)
         run: |
@@ -34,6 +32,9 @@ jobs:
         with:
           hugo-version: "0.146.0"
           extended: true
+
+      - name: Resolve Hugo modules
+        run: hugo mod get
 
       - name: Build Hugo site
         run: hugo
