@@ -11,12 +11,38 @@ title = "Perfil de Alejandro"
     unsafe = true
 
 [params]
-    [params.author]
-        name = "Alejandro Flores"
-    description = "Backend Engineer"
-    gravatarEmail = ""
-    headerElements = ["about", "home", "resumes", "socials", "works"]
+  user = "afr-dt"
+  hostname = "afr-dt.github.io"
+  email = "alejandro@example.com"
+  description = "Backend & DevOps Engineer"
+  openLinksInNewTab = true
+
+[menu]
+  [[menu.header]]
+    name = "Sobre mí"
+    identifier = "about"
+    url = "/about/"
+    weight = 2
+
+  [params.author]
+    name = "Alejandro Flores"
+    avatar = ""
+    email = "aleksgnu@gmail.com"
+
+  # Social links
+  [[params.social]]
+    name = "github"
+    url = "https://github.com/afr-dt"
+  
+  [[params.social]]
+    name = "linkedin"
+    url = "https://linkedin.com/in/afr-dt"
+
+  [[params.social]]
+    name = "twitter"
+    url = "https://twitter.com/afr_dt"
+
+  [[params.social]]
+    name = "email"
+    url = "mailto:aleksgnu@gmail.com"
     
-    [[params.socials]]
-        name = "github"
-        url = "https://github.com/afr-dt"
