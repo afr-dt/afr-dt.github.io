@@ -19,13 +19,10 @@ jobs:
         with:
           submodules: true
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
       - name: Install Dart Sass
-        run: npm install -g sass
+        uses: craicoverflow/dart-sass-action@v1
+        with:
+          version: "1.62.1"
 
       - name: Set up Hugo
         uses: peaceiris/actions-hugo@v2
