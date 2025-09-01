@@ -19,13 +19,15 @@ jobs:
         with:
           submodules: true
 
-      - name: Install Dart Sass Embedded
+      - name: Install Dart Sass (CLI)
         run: |
-          DSE_VERSION=1.77.5
-          curl -fsSL -o dse.tgz "https://github.com/sass/dart-sass-embedded/releases/download/${DSE_VERSION}/dart-sass-embedded-${DSE_VERSION}-linux-x64.tar.gz"
-          tar -xzf dse.tgz
-          sudo mv dart-sass-embedded/dart-sass-embedded /usr/local/bin/dart-sass-embedded
-          dart-sass-embedded --version
+          DART_SASS_VERSION=1.77.5
+          curl -fsSL -o ds.tgz "https://github.com/sass/dart-sass/releases/download/${DART_SASS_VERSION}/dart-sass-${DART_SASS_VERSION}-linux-x64.tar.gz"
+          tar -xzf ds.tgz
+          sudo mv dart-sass /usr/local/lib/dart-sass
+          sudo ln -sf /usr/local/lib/dart-sass/sass /usr/local/bin/sass
+          echo "HUGO_DART_SASS_PATH=/usr/local/lib/dart-sass" >> $GITHUB_ENV
+          sass --version
 
       - name: Set up Hugo
         uses: peaceiris/actions-hugo@v2
