@@ -1,8 +1,9 @@
-name: Deploy Go Static Page to GitHub Pages
+name: Deploy Hugo Site to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 permissions:
   contents: read
@@ -12,23 +13,24 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-
-      - name: Set up Go
-        uses: actions/setup-go@v5
         with:
-          go-version: "1.22"
+          submodules: true
 
-      - name: Build HTML with Go
-        run: go run . --write
+      - name: Set up Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
 
-      - name: Upload artifact (dist/)
+      - name: Build Hugo site
+        run: hugo
+
+      - name: Upload artifact (public/)
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: public
 
   deploy:
     needs: build

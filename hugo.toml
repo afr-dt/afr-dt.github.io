@@ -1,0 +1,14 @@
+baseURL = "https://afr-dt.github.io/"
+languageCode = "es-es"
+title = "Perfil de Alejandro"
+theme = "nightfall"
+
+[params]
+    author = "Alejandro"
+    description = "Backend Engineer"
+    gravatarEmail = ""
+    headerElements = ["about", "home", "resumes", "socials", "works"]
+    
+    [[params.socials]]
+        name = "github"
+        url = "https://github.com/afr-dt"
