@@ -11,6 +11,7 @@ title: "Home"
 🔧 Manejo herramientas de infraestructura como Terraform y flujos de trabajo automatizados con CI/CD.
 
 ### 🛠️ Tecnologías que uso con frecuencia:
+
 - ⚙️ Docker & Kubernetes
 - 📦 Terraform
 - 🚀 CI/CD

@@ -12,7 +12,7 @@ title = "Perfil de Alejandro"
 
 [params]
     [params.author]
-        name = "Alejandro"
+        name = "Alejandro Flores"
     description = "Backend Engineer"
     gravatarEmail = ""
     headerElements = ["about", "home", "resumes", "socials", "works"]
