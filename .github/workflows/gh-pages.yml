@@ -19,13 +19,13 @@ jobs:
         with:
           submodules: true
 
-      - name: Set up Node.js (for Dart Sass)
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install Dart Sass
-        run: npm install -g sass@1.62.1
+      - name: Install Dart Sass Embedded
+        run: |
+          DSE_VERSION=1.77.5
+          curl -fsSL -o dse.tgz "https://github.com/sass/dart-sass-embedded/releases/download/${DSE_VERSION}/dart-sass-embedded-${DSE_VERSION}-linux-x64.tar.gz"
+          tar -xzf dse.tgz
+          sudo mv dart-sass-embedded/dart-sass-embedded /usr/local/bin/dart-sass-embedded
+          dart-sass-embedded --version
 
       - name: Set up Hugo
         uses: peaceiris/actions-hugo@v2
