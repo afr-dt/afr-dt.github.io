@@ -3,6 +3,10 @@ languageCode = "es-es"
 title = "Perfil de Alejandro"
 theme = "nightfall"
 
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = true
+
 [params]
     [params.author]
         name = "Alejandro"
