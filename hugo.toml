@@ -4,7 +4,8 @@ title = "Perfil de Alejandro"
 theme = "nightfall"
 
 [params]
-    author = "Alejandro"
+    [params.author]
+        name = "Alejandro"
     description = "Backend Engineer"
     gravatarEmail = ""
     headerElements = ["about", "home", "resumes", "socials", "works"]
