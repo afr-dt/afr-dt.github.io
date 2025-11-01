@@ -3,46 +3,45 @@ languageCode = "es-es"
 title = "Perfil de Alejandro"
 
 [module]
-  [[module.imports]]
-    path = "github.com/lordmathis/hugo-theme-nightfall"
+[[module.imports]]
+path = "github.com/lordmathis/hugo-theme-nightfall"
 
 [markup]
-  [markup.goldmark.renderer]
-    unsafe = true
+[markup.goldmark.renderer]
+unsafe = true
 
 [params]
-  user = "afr-dt"
-  hostname = "afr-dt.github.io"
-  email = "alejandro@example.com"
-  description = "Backend & DevOps Engineer"
-  openLinksInNewTab = true
+user = "afr-dt"
+hostname = "afr-dt.github.io"
+email = "alejandro@example.com"
+description = "Backend & DevOps Engineer"
+openLinksInNewTab = true
 
 [menu]
-  [[menu.header]]
-    name = "Sobre mí"
-    identifier = "about"
-    url = "/about/"
-    weight = 2
+[[menu.header]]
+name = "Sobre mí"
+identifier = "about"
+url = "/about/"
+weight = 2
 
-  [params.author]
-    name = "Alejandro Flores"
-    avatar = ""
-    email = "aleksgnu@gmail.com"
+[params.author]
+name = "Alejandro Flores"
+avatar = ""
+email = "aleksgnu@gmail.com"
 
-  # Social links
-  [[params.social]]
-    name = "github"
-    url = "https://github.com/afr-dt"
-  
-  [[params.social]]
-    name = "linkedin"
-    url = "https://linkedin.com/in/afr-dt"
+# Social links
+[[params.social]]
+name = "github"
+url = "https://github.com/afr-dt"
 
-  [[params.social]]
-    name = "twitter"
-    url = "https://twitter.com/afr_dt"
+[[params.social]]
+name = "linkedin"
+url = "https://linkedin.com/in/afr-dt"
 
-  [[params.social]]
-    name = "email"
-    url = "mailto:aleksgnu@gmail.com"
-    
+[[params.social]]
+name = "twitter"
+url = "https://twitter.com/afr_dt"
+
+[[params.social]]
+name = "email"
+url = "mailto:aleksgnu@gmail.com"
