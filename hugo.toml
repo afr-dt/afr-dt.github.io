@@ -1,10 +1,13 @@
 baseURL = "https://afr-dt.github.io/"
-languageCode = "es-es"
+languageCode = 'en-us'
 title = "Perfil de Alejandro"
 
 [module]
 [[module.imports]]
 path = "github.com/lordmathis/hugo-theme-nightfall"
+
+[pagination]
+pagerSize = 3
 
 [markup]
 [markup.goldmark.renderer]
@@ -13,9 +16,10 @@ unsafe = true
 [params]
 user = "afr-dt"
 hostname = "afr-dt.github.io"
-email = "alejandro@example.com"
+email = "aleksgnu@gmail.com"
 description = "Backend & DevOps Engineer"
 openLinksInNewTab = true
+
 
 [menu]
 [[menu.header]]
@@ -23,6 +27,12 @@ name = "Sobre mí"
 identifier = "about"
 url = "/about/"
 weight = 2
+
+[[menu.header]]
+name = "Blog"
+identifier = "blog"
+url = "/post/"
+weight = 3
 
 [params.author]
 name = "Alejandro Flores"
