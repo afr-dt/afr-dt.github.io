@@ -1,7 +1,6 @@
 ---
 title: "Sobre mí / About me"
 date: 2025-11-01
-showPublishedDate: false
 ---
 
 ## Perfil en Español
