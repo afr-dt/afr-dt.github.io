@@ -1,64 +1,53 @@
-# Sitio estático con Hugo desplegado en GitHub Pages
+# Hugo Static Site on GitHub Pages
 
-Este repositorio contiene un sitio estático construido con **Hugo** (tema [hugo-coder](https://github.com/luizdepra/hugo-coder)) y desplegado automáticamente mediante **GitHub Actions** a **GitHub Pages**.
+This repository hosts a static site built with [Hugo](https://gohugo.io/) and the [hugo-coder](https://github.com/luizdepra/hugo-coder) theme. It is automatically deployed to [GitHub Pages](https://pages.github.com/) via GitHub Actions.
 
-## ¿Qué hace este proyecto?
+## ✨ Features
+- **Hugo (Extended):** Fast static site generation with SCSS support.
+- **Auto Deployment:** Seamless CI/CD using GitHub Actions on every push to `main`.
+- **Hugo Modules:** Theme management as a module (no need for `themes/` folder).
 
-- Genera el sitio con Hugo (Extended) y compila SCSS del tema.
-- Despliega automáticamente a GitHub Pages al hacer push en `main`.
+## 🛠 Prerequisites
+- **Hugo Extended:** ≥ 0.146.0
+- **Dart Sass:** Available in your `PATH` (e.g., `npm i -g sass`)
+- **Go:** Required for Hugo Modules.
 
-## Requisitos
-
-- Hugo Extended ≥ 0.146.0
-- Dart Sass disponible en PATH (p. ej. `npm i -g sass@1.62.1`)
-- Hugo Modules habilitado (el tema se resuelve como módulo)
-
-## Estructura
-
-```
+## 📂 Project Structure
+```text
 .
-├── hugo.toml            # Configuración del sitio
-├── content/             # Contenido Markdown
-│   ├── about.md
-│   └── posts/           # Artículos del blog
-├── archetypes/          # Plantillas para nuevo contenido
-├── (tema vía Hugo Modules, no se necesita `themes/` en el repo)
-└── .github/workflows/gh-pages.yml  # Workflow de despliegue
+├── .github/workflows/  # Deployment automation
+├── archetypes/         # Content templates
+├── content/            # Markdown content
+│   ├── about.md        # "About Me" page
+│   └── posts/          # Blog articles
+└── hugo.toml           # Site configuration
 ```
 
-## Desarrollo local
+## 🚀 Getting Started
 
-```
-hugo mod tidy
-hugo server -D
-```
+### Local Development
+1. Install dependencies:
+   ```bash
+   hugo mod tidy
+   ```
+2. Run the development server:
+   ```bash
+   hugo server -D
+   ```
+3. Open [http://localhost:1313](http://localhost:1313) in your browser.
 
-Visita http://localhost:1313 para previsualizar. Usa `-D` para incluir borradores.
-
-## Build manual
-
-```
-hugo --gc --minify
-```
-
-La salida se genera en `public/` (no se debe commitear).
-
-## Deploy
-
-El deploy se ejecuta vía workflow en `.github/workflows/gh-pages.yml` al hacer push a `main`. Asegura en Settings → Pages que la fuente sea "GitHub Actions".
-
-## Crear contenido
-
-```
-hugo new posts/mi-articulo.md
+### Create New Content
+```bash
+hugo new posts/my-new-article.md
 ```
 
-Usa front matter y nombres en minúsculas con guiones.
+## 🚢 Deployment
+Deployment is automatic. When you push to the `main` branch, the [GitHub Actions workflow](.github/workflows/gh-pages.yml) builds the site and deploys it to GitHub Pages.
 
-Notas: mantén `baseURL` correcto en `hugo.toml`; no subas `public/` ni secretos. Si falla Sass, verifica que `sass` está disponible en el PATH.
+> **Note:** Ensure your repository settings under **Settings → Pages** have "Build and deployment → Source" set to **GitHub Actions**.
 
-## Dependencias de módulos
+## 📝 License
+This project is personal content. The theme follows its own [license](https://github.com/luizdepra/hugo-coder/blob/main/LICENSE).
 
-Commitea `go.mod` y `go.sum` para builds reproducibles. Usa `hugo mod tidy` cuando agregues o actualices el tema o módulos.
-
-El tema está fijado al release v1.2 de hugo-coder (`b476d777`).
+---
+*Created by [Alejandro Flores](https://afr-dt.github.io/)*
