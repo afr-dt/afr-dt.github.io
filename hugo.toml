@@ -1,7 +1,5 @@
 baseURL = "https://afr-dt.github.io/"
-languageCode = "es"
 defaultContentLanguage = "es"
-title = "Alejandro Flores"
 enableEmoji = true
 
 [module]
@@ -23,21 +21,44 @@ author = "authors"
 
 [params]
 author = "Alejandro Flores"
-info = ["Backend & DevOps Engineer"]
-description = "Backend & DevOps Engineer"
 keywords = "blog,developer,devops,backend,python,gcp"
 colorScheme = "auto"
 since = 2019
 
-[[menu.main]]
-name = "Sobre mí"
-weight = 1
-url = "about/"
+[languages]
+  [languages.es]
+    label = "Español"
+    locale = "es"
+    weight = 1
+    title = "Alejandro Flores"
+    [languages.es.params]
+      info = ["Ingeniero Backend & DevOps"]
+      description = "Blog personal de Alejandro Flores"
+    [[languages.es.menu.main]]
+      name = "Sobre mí"
+      weight = 1
+      url = "about/"
+    [[languages.es.menu.main]]
+      name = "Blog"
+      weight = 2
+      url = "posts/"
 
-[[menu.main]]
-name = "Blog"
-weight = 2
-url = "posts/"
+  [languages.en]
+    label = "English"
+    locale = "en"
+    weight = 2
+    title = "Alejandro Flores"
+    [languages.en.params]
+      info = ["Backend & DevOps Engineer"]
+      description = "Alejandro Flores' personal blog"
+    [[languages.en.menu.main]]
+      name = "About"
+      weight = 1
+      url = "about/"
+    [[languages.en.menu.main]]
+      name = "Blog"
+      weight = 2
+      url = "posts/"
 
 [[params.social]]
 name = "Github"
