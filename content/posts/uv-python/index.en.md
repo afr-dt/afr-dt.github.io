@@ -4,7 +4,7 @@ date = 2025-11-04T09:00:00-06:00
 description = "UV replaces pip, virtualenv, and pipx with a single ultra-fast tool written in Rust. Learn how to master it."
 tags = ["python", "devops", "virtualenv", "pip", "uv", "rust"]
 categories = ["Python", "Tools"]
-draft = false
+draft = true
 +++
 
 ## 🧩 What is UV?
