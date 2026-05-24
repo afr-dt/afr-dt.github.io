@@ -7,6 +7,10 @@ on:
     paths-ignore:
       - "README.md"
       - "GEMINI.md"
+  workflow_run:
+    workflows: ["Publish Post"]
+    types:
+      - completed
   workflow_dispatch:
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
@@ -23,6 +27,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
