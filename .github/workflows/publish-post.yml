@@ -1,0 +1,43 @@
+name: Publish Post
+
+on:
+  workflow_dispatch:
+    inputs:
+      post_name:
+        description: "Name of the post folder (e.g., uv-python)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Update draft status
+        run: |
+          POST_DIR="content/posts/${{ github.event.inputs.post_name }}"
+          if [ -d "$POST_DIR" ]; then
+            echo "Publishing files in $POST_DIR"
+            # Replace draft = true with draft = false in all index files within the bundle
+            find "$POST_DIR" -name "index.*.md" -exec sed -i 's/draft = true/draft = false/g' {} +
+          else
+            echo "Error: Directory $POST_DIR does not exist."
+            exit 1
+          fi
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: publish post ${{ github.event.inputs.post_name }}"
+            git push
+          fi
