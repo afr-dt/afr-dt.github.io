@@ -61,24 +61,24 @@ The VM is automatically provisioned on its first boot with the following tools:
 
 ---
 
-## Launching and managing the instance
+## Launching and managing the VM
 
 With Multipass installed, clone the repository and run:
 
 ```bash
-# Launch the VM with the declarative configuration
+# Create the VM using our configuration
 multipass launch lts --name devops-instance --cpus 2 --memory 4G --disk 28G --cloud-init ./cloud-config.yaml
 ```
 ![cloud-init](img/multipass-launch.png)
 
 ```bash
-# Access the VM shell
+# Enter the VM terminal
 multipass shell devops-instance
 ```
 ![cloud-init](img/multipass-shell.png)
 
 ```bash
-# Delete and purge the VM when finished
+# Clean up and delete the VM when you are done
 multipass delete --purge devops-instance
 ```
 
@@ -91,9 +91,9 @@ This demonstrates the value of `cloud-init`: instead of executing manual setup s
 
 ---
 
-## Verifying the provisioning
+## Checking that everything works
 
-Once inside the VM, you can verify that the main tools are available by running:
+Once inside the VM, you can confirm that everything works by running:
 
 ```bash
 terraform version && aws --version && gcloud version && kubectl version --client && go version && node -v && python --version
