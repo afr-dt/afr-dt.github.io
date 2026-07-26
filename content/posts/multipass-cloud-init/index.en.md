@@ -1,5 +1,5 @@
 +++
-draft = true
+draft = false
 date = 2026-07-26T13:45:58-06:00
 title = "Multipass + cloud-init"
 description = "My reproducible Ubuntu DevOps VM in one command"
