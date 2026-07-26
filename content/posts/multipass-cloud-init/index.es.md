@@ -5,7 +5,7 @@ description = "Mi VM de Ubuntu reproducible para DevOps en un solo comando"
 tags = ["devops", "cloud", "multipass", "ubuntu", "terraform", "kubernetes", "local-development"]
 categories = ["DevOps", "Cloud"]
 author = "Alejandro Flores"
-draft = true
+draft = false
 +++
 
 # Multipass + cloud-init
