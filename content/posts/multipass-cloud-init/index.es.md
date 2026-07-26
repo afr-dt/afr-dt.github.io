@@ -12,9 +12,9 @@ draft = false
 
 **Mi VM de Ubuntu reproducible para DevOps en un solo comando**
 
-En backend, cloud y DevOps es muy fácil que el entorno local termine lleno de instalaciones manuales, versiones mezcladas y configuraciones difíciles de repetir. Después de probar distintas formas de aislar herramientas sin ensuciar mi host, terminé usando una combinación que me ha funcionado muy bien: una VM ligera de Ubuntu en Multipass, provisionada desde el primer arranque con `cloud-init`.
+Para evitar un entorno local lleno de instalaciones manuales y conflictos de versiones en backend y DevOps, utilizo una solución ligera y limpia: una máquina virtual (VM) de Ubuntu en **Multipass**, configurada desde el primer arranque con **cloud-init**. 
 
-La idea es simple: levantar un entorno limpio, reproducible y desechable en minutos. Si algo se rompe, la VM se elimina y se vuelve a crear; si cambio de equipo, el setup se puede reconstruir con el mismo archivo declarativo.
+Esto me permite levantar un entorno declarativo, reproducible y desechable en minutos. Si algo falla, destruyo la VM y la recreo sin afectar mi máquina host.
 
 > Repositorio en GitHub: [afr-dt/cloud-init-config](https://github.com/afr-dt/cloud-init-config)
 
@@ -22,121 +22,62 @@ La idea es simple: levantar un entorno limpio, reproducible y desechable en minu
 
 ## ¿Qué problema quiero resolver?
 
-Si trabajas con Terraform, Kubernetes, CLIs de cloud y varios runtimes al mismo tiempo, tarde o temprano el sistema host se vuelve incómodo.
+Trabajar con múltiples herramientas (Terraform, Kubernetes, CLIs de cloud y runtimes) directamente en la máquina host genera problemas clásicos:
+- Conflictos entre versiones de lenguajes (Python, Node.js, Go) y paquetes del sistema.
+- Dificultad para actualizar CLIs de AWS/GCP de forma consistente.
+- Falta de documentación sobre cómo se instalaron las herramientas.
+- Poca reproducibilidad al cambiar de computadora o compartir configuraciones.
 
-Algunos síntomas clásicos:
-
-- Versiones distintas de Python, Node.js o Go mezcladas con las del sistema.
-- CLIs de AWS o GCP instaladas a mano y difíciles de actualizar de forma consistente.
-- Herramientas que funcionaban en una laptop, pero nadie recuerda cómo volver a instalarlas exactamente igual.
-- Muy poca reproducibilidad al cambiar de máquina o compartir entorno con otra persona.
-
-Lo que quería era tener tres cosas muy claras:
-
-- Un entorno aislado del host.
-- Una configuración declarativa y versionada en Git.
-- La libertad de destruir y recrear la VM cuando quiera, sin miedo a romper nada importante.
+El objetivo es lograr un entorno **aislado**, definido de forma **declarativa** (control de versiones en Git) y fácil de **destruir y recrear** en segundos.
 
 ---
 
 ## ¿Por qué Multipass + cloud-init?
 
-Los contenedores resuelven muchos casos, pero no siempre son la mejor experiencia cuando lo que buscas es una caja de herramientas completa con shell, editor, runtimes, CLIs e instalaciones de sistema dentro de un Ubuntu real.
+Aunque los contenedores son muy útiles, a veces se necesita un entorno de desarrollo completo con un sistema operativo real.
 
-Ahí es donde Multipass encaja muy bien: permite lanzar VMs ligeras de Ubuntu de forma rápida, con buen equilibrio entre aislamiento y simplicidad. Y `cloud-init` completa la historia porque convierte todo el aprovisionamiento inicial en una definición declarativa, en lugar de una lista larga de pasos manuales en un README.
-
-En otras palabras, Multipass me da la máquina; `cloud-init`, el estado deseado.
+**Multipass** permite crear VMs ligeras de Ubuntu de forma rápida y sencilla. **cloud-init** automatiza la instalación y configuración inicial mediante un archivo declarativo (YAML), reemplazando las largas guías manuales de instalación. En resumen: Multipass proporciona la máquina y cloud-init define su estado.
 
 ---
 
-## Arquitectura rápida del enfoque
-
-La idea general se puede resumir así:
+## Arquitectura del enfoque
 
 ```text
-macOS / Linux host
-        |
-        v
-    Multipass
-        |
-        v
-   Ubuntu VM
-        |
-        v
-   cloud-init
-        |
-        v
-Runtimes + Cloud CLIs + Kubernetes tools + Shell setup
+macOS / Linux host -> Multipass -> Ubuntu VM -> cloud-init -> Herramientas y Runtimes
 ```
 
-Ese aislamiento es justo lo que me interesa: el host se mantiene limpio y la VM se convierte en un workspace reproducible para tareas de DevOps y backend.
+Este flujo mantiene la máquina host limpia y el workspace aislado.
 
 ---
 
-## ¿Qué incluye esta instancia DevOps?
+## ¿Qué incluye esta instancia?
 
-La VM arranca con Ubuntu y durante el primer boot instala una base bastante práctica para trabajo diario.
-
-### Lenguajes y runtimes
-
-- Go
-- Python gestionado con `uv`
-- Node.js LTS gestionado con `nvm`
-- `build-essential` para dependencias nativas
-
-### Infraestructura y cloud
-
-- Terraform
-- AWS CLI v2
-- Google Cloud CLI (`gcloud`)
-
-### Herramientas de Kubernetes
-
-- `kubectl`
-- `k9s`
-- `kubectx`
-- `kubens`
-- `kubecolor`
-
-### Utilidades del entorno
-
-- `jq`, `fzf`, `htop`, `tmux`, `curl`, `git`, `unzip`
-- Zsh con Starship
-- Neovim con LazyVim
-- PATH personalizado para tener las herramientas disponibles desde el inicio
-
-El resultado es que, al entrar a la VM, ya tienes un entorno funcional en lugar de una instalación vacía de Ubuntu que todavía requiere media hora de configuración manual.
+La VM se aprovisiona automáticamente en su primer inicio con las siguientes herramientas:
+- **Lenguajes y Runtimes**: Go, Python (gestión con `uv`), Node.js (gestión con `nvm`) y `build-essential`.
+- **Cloud e Infraestructura**: Terraform, AWS CLI v2 y Google Cloud CLI (`gcloud`).
+- **Kubernetes**: `kubectl`, `k9s`, `kubectx`, `kubens` y `kubecolor`.
+- **Entorno y Utilidades**: Zsh con Starship, Neovim con LazyVim, `jq`, `fzf`, `htop`, `tmux`, `curl` y `git`.
 
 ---
 
-## Cómo lanzar la instancia
+## Lanzamiento y gestión de la instancia
 
-Una vez que tienes Multipass instalado, el flujo es muy simple. Clonas el repositorio y lanzas la instancia con:
+Con Multipass instalado, clona el repositorio y ejecuta:
 
 ```bash
-multipass launch lts \
-  --name devops-instance \
-  --cpus 2 \
-  --memory 4G \
-  --disk 28G \
-  --cloud-init ./cloud-config.yaml
+# Lanzar VM con la configuración declarativa
+multipass launch lts --name devops-instance --cpus 2 --memory 4G --disk 28G --cloud-init ./cloud-config.yaml
 ```
-
 ![cloud-init](img/multipass-launch.png)
 
-Defino CPU, memoria y disco explícitamente para que la VM siga siendo útil sin consumir más recursos de los necesarios en el host.
-
-Luego puedes entrar con:
-
 ```bash
+# Acceder a la shell de la VM
 multipass shell devops-instance
 ```
-
 ![cloud-init](img/multipass-shell.png)
 
-Y cuando ya no la necesites, eliminarla es igual de directo:
-
 ```bash
+# Eliminar y purgar la VM al terminar
 multipass delete --purge devops-instance
 ```
 
@@ -144,68 +85,36 @@ multipass delete --purge devops-instance
 
 ## Experiencia del primer arranque
 
-La intención es que el primer login ya se sienta como un entorno de trabajo, no como un servidor recién instalado.
-
-Por defecto, la configuración deja listo lo siguiente:
-
-- Usuario `ubuntu`
-- `sudo` sin contraseña para ese usuario
-- Zsh + Starship para tener un prompt más informativo
-- Neovim con LazyVim
-- Mejor ergonomía para Kubernetes con `k9s`, `kubectx`, `kubens` y `kubecolor`
-
-Aquí es donde `cloud-init` realmente aporta valor: en vez de documentar pasos manuales o scripts difíciles de mantener, todo el estado deseado vive en un archivo YAML que se aplica automáticamente en el primer boot.
-
-Esto hace que el entorno sea:
-
-- Declarativo
-- Reproducible
-- Compartible
-- Fácil de reconstruir
+Al ingresar a la VM por primera vez, el usuario `ubuntu` ya cuenta con privilegios `sudo` sin contraseña, la shell configurada con Zsh/Starship y el editor Neovim listo. 
+Esto demuestra el valor de `cloud-init`: en lugar de ejecutar scripts manuales, todo el estado del sistema se define de forma declarativa, reproducible y fácil de compartir en un solo archivo YAML.
 
 ---
 
-## Validación rápida después del provisioning
+## Validación del aprovisionamiento
 
-Una mejora útil para este flujo es verificar desde el inicio que las herramientas principales realmente quedaron disponibles.
-
-Después de entrar a la VM, puedes validar con algo como esto:
+Una vez dentro de la VM, puedes verificar que las herramientas principales estén disponibles ejecutando:
 
 ```bash
-terraform version
-aws --version
-gcloud version
-kubectl version --client
-go version
-node -v
-python --version
+terraform version && aws --version && gcloud version && kubectl version --client && go version && node -v && python --version
 ```
-
 ![cloud-init](img/multipass-ubuntu.png)
-
-Si estos comandos responden correctamente, ya tienes una señal bastante confiable de que la instancia quedó lista para tareas comunes de infraestructura, cloud y desarrollo.
 
 ---
 
-## ¿Para qué lo estoy usando?
+## Casos de uso comunes
 
-Hay varios escenarios donde esta VM me resulta especialmente útil:
-
-- Probar Terraform sin ensuciar mi host.
-- Trabajar con AWS y GCP desde un entorno aislado.
-- Experimentar con herramientas de Kubernetes sin tocar mi configuración local principal.
-- Tener una caja de desarrollo con Go, Python y Node.js lista para usar.
-
-Como todo vive dentro de la VM, puedo instalar cosas, romper configuraciones, probar ideas y volver a un estado limpio en pocos minutos simplemente recreando la instancia.
+Esta VM es ideal para:
+- Desarrollar e implementar configuraciones de Terraform de forma aislada.
+- Autenticar y ejecutar tareas en AWS y GCP sin persistir credenciales en el host.
+- Experimentar con Kubernetes (`kubectl`, `k9s`) de forma segura.
+- Probar runtimes de Go, Python o Node.js sin alterar las versiones locales de tu máquina.
 
 ---
 
 ## Trade-offs y límites
 
-Este enfoque no reemplaza todos los flujos locales.
+Este enfoque no reemplaza todos los casos de uso locales:
+* Para tareas puntuales o de un solo runtime, un contenedor Docker suele ser más rápido y ligero.
+* Si requieres interfaces gráficas (GUI) o integraciones directas con el hardware del host, es mejor trabajar de forma nativa.
 
-Si solo necesitas ejecutar una herramienta muy puntual, un contenedor puede ser más ligero. Y si dependes mucho de integraciones directas con el sistema host o herramientas gráficas específicas, seguir trabajando fuera de la VM puede ser más práctico.
-
-Aun así, para mi caso el beneficio principal sigue siendo la consistencia: un Ubuntu real, aislado, definido como código y fácil de reconstruir.
-
----
+Sin embargo, para tareas de DevOps e infraestructura, la reproducibilidad y el aislamiento de un entorno real basado en código superan estas limitaciones.
